@@ -33,8 +33,8 @@ export class OpenAIStreamGatewayClient implements OpenAIStreamGateway {
       }),
     });
 
-    console.log("=================== STARTING STREAM ====================");
-    console.log("[SUMMARY]", JSON.stringify(prompt.value, null, 2));
+    console.log("=====================================================");
+    console.log("[PROMPT]:", JSON.stringify(prompt.value, null, 2));
 
     const stream = new ReadableStream({
       async start(controller) {

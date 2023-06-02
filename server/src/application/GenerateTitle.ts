@@ -18,9 +18,13 @@ export class GenerateTitle {
     const { title, language = "pt-BR" } = input;
 
     const languageName = LanguageName.fromCode(language);
-    const promptMask = `Recreate the title in a funny way in {language} language: "{title}"`;
 
-    const prompt = new Prompt(promptMask.replace("{language}", languageName).replace("{title}", title));
+    const prompt = new Prompt(`Recreate the title in a funny way in {language} language: "{title}"`);
+    prompt.replaceKeys({
+      "{language}": languageName,
+      "{title}": title,
+    });
+
     const newTitle = await this.openAIGateway.call(prompt, { temperature: 0.8 });
 
     return {

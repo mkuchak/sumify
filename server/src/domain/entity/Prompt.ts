@@ -45,4 +45,22 @@ export class Prompt {
   get price(): number {
     return CalculatePrice.calculate(this);
   }
+
+  replaceKeys(keys: { [key: string]: string }): void {
+    if (typeof this._value === "string") {
+      let value = this._value;
+      Object.keys(keys).forEach((key) => {
+        value = value.replaceAll(key, keys[key]);
+      });
+      this._value = value;
+    } else {
+      this._value.forEach((message) => {
+        let value = message.content;
+        Object.keys(keys).forEach((key) => {
+          value = value.replaceAll(key, keys[key]);
+        });
+        message.content = value;
+      });
+    }
+  }
 }

@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "build": "node esbuild.config.mjs",
-    "start": "wrangler dev",
-    "deploy": "wrangler publish"
+    "dev": "wrangler dev --local --compatibility-flag=streams_enable_constructors",
+    "staging": "wrangler dev",
+    "deploy": "wrangler deploy"
   },
   "dependencies": {
     "esbuild": "^0.17.19",

@@ -12,21 +12,18 @@ export interface GenerateSummaryInput {
 }
 
 export interface GenerateSummaryOutput {
-  // title: string;
   summary: {
+    title: string;
     text: string;
     start: number;
     end: number;
     startFormatted?: string;
     endFormatted?: string;
   }[];
-  // aggregatedSummary: string;
-  // price?: string;
-  // fullPrice?: string;
 }
 
 export class GenerateSummary {
-  WORDS_DECREASE_RATIO = 0.5; // percentage of less words for each segment (e.g. 0.5 is 50% less)
+  WORDS_DECREASE_RATIO = 0.6; // percentage of less words for each segment (e.g. 0.6 is 60% less)
   SEGMENT_TIME_IN_SECONDS = 600; // 10 minutes
 
   constructor(private readonly youTubeGateway: YouTubeGateway, private readonly openAIGateway: OpenAIGateway) {}
@@ -52,14 +49,11 @@ export class GenerateSummary {
           [
             {
               role: "system",
-              content:
-                `This is an excerpt from a transcribed YouTube video. Write a concise summary with title of up to {words} words of this section in the {language} language.`
-                  .replace("{words}", words)
-                  .replace("{language}", languageName),
+              content: `This is an excerpt from a transcribed YouTube video. Write a concise summary with title of up to {words} words of this section in the {language} language.`,
             },
             {
               role: "user",
-              content: `Video context: ${video.title}. Excerpt: ${segment.text}.`,
+              content: `Video context: {context}. Excerpt: {text}.`,
             },
             {
               role: "system",
@@ -75,15 +69,20 @@ export class GenerateSummary {
             },
             {
               role: "system",
-              content: `Don't forget that the summary need to be in {language} language.`.replace(
-                "{language}",
-                languageName
-              ),
+              content: `Don't forget that the summary need to be in {language} language.`,
             },
           ],
           "gpt-3.5-turbo"
         );
+        prompt.replaceKeys({
+          "{words}": words,
+          "{language}": languageName,
+          "{context}": video.title,
+          "{text}": segment.text,
+        });
+
         const promise = this.openAIGateway.call(prompt, { temperature: 0.4 });
+
         return pRetry(() => promise, { retries, minTimeout });
       });
       response = await Promise.all(promises);
@@ -103,11 +102,6 @@ export class GenerateSummary {
       };
     });
 
-    // let aggregatedSummary = "";
-    // summary.forEach((segment) => (aggregatedSummary = `${aggregatedSummary} ${segment.text}`.trim()));
-
-    return {
-      summary,
-    };
+    return { summary };
   }
 }

@@ -55,11 +55,14 @@ export class OpenAIGatewayClient implements OpenAIGateway {
 
     const data: OpenAIResponse = await response.json();
 
-    // console.log("=====================================================");
-    console.log("[PROMPT]", JSON.stringify(prompt.value, null, 2));
-    console.log("[CONTENT]", data?.choices?.[0]?.message?.content);
-    console.log("[ERROR]",data?.error?.message);
+    const content = data?.choices?.[0]?.message?.content.trim();
+    const error = data?.error?.message;
 
-    return data?.choices?.[0]?.message?.content.trim();
+    console.log("=====================================================");
+    console.log("[PROMPT]:", JSON.stringify(prompt.value, null, 2));
+    console.log("[CONTENT]:", content);
+    console.log("[ERROR]:", error || "No error");
+
+    return content;
   }
 }
