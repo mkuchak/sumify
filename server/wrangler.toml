@@ -1,0 +1,6 @@
+name = "sumify-server"
+main = "dist/index.js"
+compatibility_date = "2023-05-10"
+
+[build]
+command = "npm run build"

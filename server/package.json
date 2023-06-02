@@ -1,0 +1,25 @@
+{
+  "name": "sumify-workers",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node esbuild.config.mjs",
+    "start": "wrangler dev",
+    "deploy": "wrangler publish"
+  },
+  "dependencies": {
+    "esbuild": "^0.17.19",
+    "eventsource-parser": "^1.0.0",
+    "get-video-id": "^3.6.5",
+    "gpt-tokens": "^1.0.6",
+    "hono": "^3.1.8",
+    "openai": "^3.2.1",
+    "p-retry": "^5.1.2",
+    "youtube-browser-api": "^0.0.9"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20230419.0",
+    "typescript": "^5.0.4",
+    "wrangler": "2.4.4"
+  }
+}
