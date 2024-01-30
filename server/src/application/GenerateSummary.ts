@@ -24,7 +24,7 @@ export interface GenerateSummaryOutput {
 
 export class GenerateSummary {
   WORDS_DECREASE_RATIO = 0.6; // percentage of less words for each segment (e.g. 0.6 is 60% less)
-  SEGMENT_TIME_IN_SECONDS = 600; // 10 minutes
+  SEGMENT_TIME_IN_SECONDS = 300; // 5 minutes
 
   constructor(private readonly youTubeGateway: YouTubeGateway, private readonly openAIGateway: OpenAIGateway) {}
 
@@ -72,7 +72,7 @@ export class GenerateSummary {
               content: `Don't forget that the summary need to be in {language} language.`,
             },
           ],
-          "gpt-3.5-turbo"
+          "gpt-3.5-turbo-1106"
         );
         prompt.replaceKeys({
           "{words}": words,

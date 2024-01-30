@@ -1,7 +1,14 @@
 import { CalculatePrice } from "@/domain/service/CalculatePrice";
 import { CalculateTokens } from "@/domain/service/CalculateTokens";
 
-export type Model = "gpt-3.5-turbo" | "gpt-3.5-turbo-0301" | "gpt-4" | "gpt-4-0314" | "gpt-4-32k" | "gpt-4-32k-0314";
+export type Model =
+  | "gpt-3.5-turbo"
+  | "gpt-3.5-turbo-1106"
+  | "gpt-3.5-turbo-0301"
+  | "gpt-4"
+  | "gpt-4-0314"
+  | "gpt-4-32k"
+  | "gpt-4-32k-0314";
 
 export interface Message {
   name?: string;
@@ -10,7 +17,10 @@ export interface Message {
 }
 
 export class Prompt {
-  constructor(private _value: string | Message[], readonly model: Model = "gpt-3.5-turbo") {}
+  constructor(
+    private _value: string | Message[],
+    readonly model: Model = "gpt-3.5-turbo"
+  ) {}
 
   set value(value: string | Message[]) {
     if (typeof value === "string") {
