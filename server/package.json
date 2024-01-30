@@ -6,7 +6,7 @@
     "build": "node esbuild.config.mjs",
     "dev": "wrangler dev --local --compatibility-flag=streams_enable_constructors",
     "staging": "wrangler dev",
-    "deploy": "wrangler deploy"
+    "deploy": "wrangler publish"
   },
   "dependencies": {
     "esbuild": "^0.17.19",
@@ -16,7 +16,7 @@
     "hono": "^3.1.8",
     "openai": "^3.2.1",
     "p-retry": "^5.1.2",
-    "youtube-browser-api": "^0.0.9"
+    "youtube-fetch-transcript": "^1.0.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20230419.0",
